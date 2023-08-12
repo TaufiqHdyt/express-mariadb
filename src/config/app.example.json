@@ -2,7 +2,6 @@
   "name": "express-mariadb",
   "port": 3500,
   "db": {
-    "provider": "mysql",
     "host": "localhost",
     "user": "user",
     "password": "pw",

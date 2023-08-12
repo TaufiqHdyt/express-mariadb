@@ -1,11 +1,9 @@
 import { Router } from 'express';
-import config from '#config' assert { type: 'json' };
+
+import c$index from '#controller/index.js';
 
 const index = Router();
 
-/* GET home page. */
-index.get('/', function (req, res, next) {
-  res.send({ name: config.name });
-});
+index.get('/', c$index.home);
 
 export { index };
