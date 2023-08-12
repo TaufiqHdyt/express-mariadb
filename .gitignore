@@ -65,3 +65,7 @@ typings/
 
 # os related
 .DS_store
+
+# config
+.env
+app.json
