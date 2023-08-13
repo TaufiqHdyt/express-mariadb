@@ -10,9 +10,9 @@ import {
 
 const schema = object({
   id: number().when('$del', ([del], s) => del ? s.required() : s.notRequired()),
-  name: string().required(),
-  description: string().required(),
-  price: number().required(),
+  name: string().when('$del', ([del], s) => !del ? s.required() : s.notRequired()),
+  description: string().when('$del', ([del], s) => !del ? s.required() : s.notRequired()),
+  price: number().when('$del', ([del], s) => !del ? s.required() : s.notRequired()),
   discount: number().nullable()
 });
 

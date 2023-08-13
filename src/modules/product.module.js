@@ -41,7 +41,7 @@ class m$product {
 
   delete = async ({ id }) => {
     try {
-      const sql = 'DELETE d_product WHERE id = ?';
+      const sql = 'DELETE FROM d_product WHERE id = ?';
       const value = [id];
       const result = await database.query(sql, value);
       return result;
