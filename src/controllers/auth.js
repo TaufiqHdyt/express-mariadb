@@ -4,10 +4,22 @@ import m$auth from '#module/auth.module.js';
 
 import { response, jwt, logError } from '#helper/utils.js';
 
+import {
+  object,
+  string,
+} from 'yup';
+
+const schema = object({
+  name: string().when('$reg', ([reg], s) => reg ? s.required() : s.notRequired()),
+  username: string().required(),
+  password: string().required()
+});
+
 class c$auth {
   register = async (req, res, next) => {
     try {
       const { name, username, password, role } = req.body;
+      await schema.validate({ name, username, password, role }, { context: { reg: true } });
       const message = await m$auth.register({ name, username, password, role });
       return response.send(res, 201, message);
     } catch (error) {
@@ -19,6 +31,9 @@ class c$auth {
   unregister = async (req, res, next) => {
     try {
       const { username, password } = req.body;
+
+      await schema.validate({ username, password });
+
       const [{ password: userPassword, ...user }] = await m$auth.login({ username });
 
       if (!user) {
@@ -47,6 +62,9 @@ class c$auth {
   login = async (req, res, next) => {
     try {
       const { username, password } = req.body;
+
+      await schema.validate({ username, password });
+
       const [{ password: userPassword, ...user }] = await m$auth.login({ username });
 
       if (!user) {

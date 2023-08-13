@@ -2,10 +2,27 @@ import m$product from '#module/product.module.js';
 
 import { response, logError } from '#helper/utils.js';
 
+import {
+  object,
+  string,
+  number,
+} from 'yup';
+
+const schema = object({
+  id: number().when('$del', ([del], s) => del ? s.required() : s.notRequired()),
+  name: string().required(),
+  description: string().required(),
+  price: number().required(),
+  discount: number().nullable()
+});
+
 class c$product {
   add = async (req, res, next) => {
     try {
       const { name, description, price } = req.body;
+
+      await schema.validate({ name, description, price });
+
       const message = await m$product.add({
         name,
         description,
@@ -34,6 +51,7 @@ class c$product {
     try {
       const { id } = req.params;
       const { name, description, price, discount } = req.body;
+      await schema.validate({ name, description, price, discount });
       const data = await m$product.update({ id, name, description, price, discount });
       return response.send(res, 200, data);
     } catch (error) {
@@ -45,6 +63,7 @@ class c$product {
   delete = async (req, res, next) => {
     try {
       const { id } = req.params;
+      await schema.validate({ id }, { context: { del: true } });
       const data = await m$product.delete({ id });
       return response.send(res, 200, data);
     } catch (error) {

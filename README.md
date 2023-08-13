@@ -47,6 +47,22 @@ pnpm add mariadb
 pnpm add jsonwebtoken bcrypt
 ```
 
+### Add validation with yup
+
+```sh
+pnpm add yup
+```
+
+example:
+
+```js
+import { object, string } from 'yup';
+const schema = object({
+  name: string().required(),
+  description: string().when('$ctx', ([ctx], s) => ctx ? s.required() : s.notRequired())
+});
+```
+
 ## Steps to Develop
 
 ### Setup
