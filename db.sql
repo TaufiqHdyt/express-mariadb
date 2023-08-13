@@ -1,5 +1,5 @@
 CREATE TABLE auth_user(
-	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENt,
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	name VARCHAR(50) NOT NULL,
 	username VARCHAR(50) NOT NULL UNIQUE,
 	password VARCHAR(100) NOT NULL,
@@ -9,7 +9,8 @@ CREATE TABLE auth_user(
 
 CREATE TABLE auth_role(
 	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	name VARCHAR(15) NOT NULL
+	name VARCHAR(15) NOT NULL,
+	level TINYINT(2) NOT NULL DEFAULT 99
 );
 
 CREATE TABLE auth_user_role(
@@ -21,4 +22,5 @@ CREATE TABLE auth_user_role(
 	FOREIGN KEY (role_id) REFERENCES auth_role(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-INSERT INTO auth_role (name) VALUES ('admin'), ('member');
+INSERT INTO auth_role (name, level) VALUES ('superadmin', 1), ('admin', 20), ('member', 99);
+
