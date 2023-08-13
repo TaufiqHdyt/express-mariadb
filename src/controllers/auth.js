@@ -90,9 +90,7 @@ class c$auth {
 
       const token = await jwt.sign(payload);
 
-      return response.send(res, 200, {
-        token,
-      });
+      return response.send(res, 200, { ...token });
     } catch (error) {
       logError('controller auth register:', error);
       return response.send(res, error?.code ?? 500, error?.message ?? error);

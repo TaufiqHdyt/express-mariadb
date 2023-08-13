@@ -2,9 +2,16 @@ import jsonwebtoken from 'jsonwebtoken';
 
 import config from '#config' assert { type: 'json' };
 
+export const addHours = (hour, date = new Date()) => {
+  date.setHours(date.getHours() + hour);
+  return date;
+}
+
 export const jwt = {
-  sign: async (payload, options = { expiresIn: '1h' }) =>
-    jsonwebtoken.sign(payload, config.jwt.secret, options),
+  sign: async (payload, options = { expiresIn: '1h' }) => ({
+    token: jsonwebtoken.sign(payload, config.jwt.secret, options),
+    expires: addHours(1),
+  }),
   verify: async (token) => jsonwebtoken.verify(token, config.jwt.secret),
 };
 
