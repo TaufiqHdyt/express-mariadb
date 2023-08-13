@@ -41,6 +41,12 @@ pnpm up -iL # interactively update dependencies to latest
 pnpm add mariadb
 ```
 
+### Add authorization with jwt & hash
+
+```sh
+pnpm add jsonwebtoken bcrypt
+```
+
 ## Steps to Develop
 
 ### Setup
