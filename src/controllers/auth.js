@@ -22,13 +22,19 @@ class c$auth {
       const [{ password: userPassword, ...user }] = await m$auth.login({ username });
 
       if (!user) {
-        throw 'User not found!';
+        throw {
+          code: 404,
+          message: 'User not found!',
+        };
       }
 
       const checkPassword = await bcrypt.compare(password, userPassword);
 
       if (!checkPassword) {
-        throw 'Wrong password!';
+        throw {
+          code: 400,
+          message: 'Wrong password!',
+        };
       }
 
       const payload = {
@@ -43,7 +49,7 @@ class c$auth {
       });
     } catch (error) {
       logError('controller auth register:', error);
-      return response.send(res, 500, error);
+      return response.send(res, error?.code ?? 500, error?.message ?? error);
     }
   };
 

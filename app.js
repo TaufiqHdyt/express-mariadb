@@ -7,6 +7,8 @@ import logger from 'morgan';
 
 import { router } from './src/router.js';
 
+import { response } from '#helper/utils.js';
+
 const app = express();
 
 global.__dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -18,5 +20,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 router(app);
+
+app.use(response.catchAll);
 
 export default app;

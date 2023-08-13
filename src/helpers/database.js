@@ -36,13 +36,17 @@ class database {
       );
 
       if (Array.isArray(result) && !result.length && config.db.rejectEmpty) {
-        throw 'Data not found!';
+        throw {
+          code: 404,
+          message: 'Data not found!',
+        };
       }
 
       return result;
     } catch (error) {
       logError('helpers database query:', error);
-      throw error;
+      if (Number.isInteger(error.code)) throw error;
+      throw error?.code ?? error;
     } finally {
       if (conn) conn.release();
     }
