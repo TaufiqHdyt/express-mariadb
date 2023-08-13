@@ -17,7 +17,7 @@ export const logError = (msg, err) => {
 export const response = {
   send: async (res, code, data) => {
     try {
-      if (data === 'Data not found!') code = 404;
+      if (Object.values(data).includes('Data not found!')) code = 404;
       return res.status(code).json(
         code === 200
           ? {

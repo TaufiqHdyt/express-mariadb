@@ -16,6 +16,34 @@ class c$auth {
     }
   };
 
+  unregister = async (req, res, next) => {
+    try {
+      const { username, password } = req.body;
+      const [{ password: userPassword, ...user }] = await m$auth.login({ username });
+
+      if (!user) {
+        throw {
+          code: 404,
+          message: 'User not found!',
+        };
+      }
+
+      const checkPassword = await bcrypt.compare(password, userPassword);
+
+      if (!checkPassword) {
+        throw {
+          code: 400,
+          message: 'Wrong password!',
+        };
+      }
+      const message = await m$auth.unregister({ username });
+      return response.send(res, 200, message);
+    } catch (error) {
+      logError('controller auth unregister:', error);
+      return response.send(res, 500, error);
+    }
+  };
+
   login = async (req, res, next) => {
     try {
       const { username, password } = req.body;
