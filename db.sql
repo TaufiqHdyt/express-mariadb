@@ -20,3 +20,5 @@ CREATE TABLE auth_user_role(
 	FOREIGN KEY (user_id) REFERENCES auth_user(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (role_id) REFERENCES auth_role(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+INSERT INTO auth_role (name) VALUES ('admin'), ('member');

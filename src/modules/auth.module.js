@@ -5,12 +5,13 @@ import database from '#helper/database.js';
 import { logError } from '#helper/utils.js';
 
 class m$auth {
-  register = async ({ name, username, password }) => {
+  register = async ({ name, username, password, role = 2 }) => {
     try {
       const hashed = await bcrypt.hash(password, 10);
       const sql = 'INSERT INTO auth_user (name, username, password) VALUE (?, ?, ?)';
       const value = [name, username, hashed];
-      const result = await await database.query(sql, value);
+      const result = await database.query(sql, value);
+      await database.query('INSERT INTO auth_user_role (user_id, role_id) VALUES (?, ?)', [result.insertId, role])
       return result;
     } catch (error) {
       logError('module auth register:', error);
@@ -20,9 +21,9 @@ class m$auth {
 
   login = async ({ username }) => {
     try {
-      const sql = 'SELECT id, username, password FROM auth_user WHERE username = ?';
+      const sql = 'SELECT user.id, username, password, role.name role FROM auth_user user JOIN auth_user_role aur ON user.id = aur.user_id JOIN auth_role role on role.id = aur.role_id WHERE username = ?;';
       const value = [username];
-      const result = await await database.query(sql, value);
+      const result = await database.query(sql, value);
       return result;
     } catch (error) {
       logError('module auth login:', error);
