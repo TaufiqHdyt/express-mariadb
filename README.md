@@ -83,6 +83,14 @@ edit `db` object in `app.json` based on mysql configuration
 pnpm start:dev
 ```
 
+## Steps to Deploy
+
+same as develop, but using start deploy script to run in node server
+
+```sh
+pnpm start
+```
+
 ## Notes
 
 - using experimental assert json

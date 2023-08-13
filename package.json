@@ -9,7 +9,8 @@
   "private": true,
   "scripts": {
     "start:win": "set DEV=true DEBUG=express-mariadb:* & node --watch ./bin/www.js",
-    "start:dev": "DEV=true DEBUG=express-mariadb:* node --watch ./bin/www.js"
+    "start:dev": "DEV=true DEBUG=express-mariadb:* node --watch ./bin/www.js",
+    "start": "node ./bin/www.js"
   },
   "type": "module",
   "imports": {
