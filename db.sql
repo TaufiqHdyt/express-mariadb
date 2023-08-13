@@ -28,3 +28,14 @@ CREATE TABLE `auth_user_role` (
 
 INSERT INTO `auth_role` (`name`, `level`) VALUES ('superadmin', 1), ('admin', 2), ('member', 9);
 
+CREATE TABLE `d_product` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `price` int(10,2) NOT NULL,
+  `discount` int DEFAULT NULL,
+  `username` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user` (`username`),
+  CONSTRAINT `fk_product_user` FOREIGN KEY (`username`) REFERENCES `auth_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

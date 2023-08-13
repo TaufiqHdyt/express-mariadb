@@ -9,7 +9,7 @@ class c$auth {
     try {
       const { name, username, password, role } = req.body;
       const message = await m$auth.register({ name, username, password, role });
-      return response.send(res, 200, message);
+      return response.send(res, 201, message);
     } catch (error) {
       logError('controller auth register:', error);
       return response.send(res, 500, error);
