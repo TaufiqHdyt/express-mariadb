@@ -1,15 +1,22 @@
 import mariadb from 'mariadb';
 
-import config from '#config' assert { type: 'json' };
+import config from '#config';
 
 import { logError } from '#helper/utils.js';
 
-const pool = mariadb.createPool({
-  ...config.db,
-  trace: config.debug,
-});
-
 class database {
+  #pool;
+
+  constructor() {
+    this.#pool = mariadb.createPool({
+      ...config.db,
+      bigIntAsNumber: true,
+      dateStrings: true,
+      insertIdAsNumber: true,
+      trace: config.debug,
+    });
+  }
+
   escapeUndefined = (args) => {
     if (!(args instanceof Object)) {
       return args === undefined ? null : args;
@@ -24,16 +31,11 @@ class database {
     return args;
   };
 
-  query = async (sql, params, dateStrings = true, insertIdAsNumber = true) => {
-    let conn;
+  query = async (sql, params) => {
+    const conn = await this.#pool.getConnection();
 
     try {
-      conn = await pool.getConnection();
-
-      const result = await conn.query(
-        { sql, dateStrings, insertIdAsNumber },
-        this.escapeUndefined(params),
-      );
+      const result = await conn.query({ sql }, this.escapeUndefined(params));
 
       if (Array.isArray(result) && !result.length && config.db.rejectEmpty) {
         throw {

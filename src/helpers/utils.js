@@ -1,11 +1,11 @@
 import jsonwebtoken from 'jsonwebtoken';
 
-import config from '#config' assert { type: 'json' };
+import config from '#config';
 
 export const addHours = (hour, date = new Date()) => {
   date.setHours(date.getHours() + hour);
   return date;
-}
+};
 
 export const jwt = {
   sign: async (payload, options = { expiresIn: '1h' }) => ({

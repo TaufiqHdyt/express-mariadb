@@ -33,7 +33,7 @@ pnpm up -iL # interactively update dependencies to latest
 
 ### Add config file
 
-`app.json` can be created from `.src/config/app.example.json`
+`config/index.js` can be created from `.src/config/index.example.js`
 
 ### Add mariadb
 
@@ -67,30 +67,33 @@ const schema = object({
 
 ### Setup
 
-make `app.json` file
+make `config/index.js` file
 
 ```sh
-cp src/config/app.example.json src/config/app.json
+cp src/config/index.example.js src/config/index.js
 ```
 
-edit `db` object in `app.json` based on mysql configuration
+edit `db` object in `config/index.js` based on mysql configuration
 
-```json
-{
-  "name": "express-mariadb",
-  "port": 3500,
-  "db": {
-    "provider": "mysql",
-    "host": "localhost",
-    "user": "user",
-    "password": "pw",
-    "database": "db",
-    "socket": "/path/to/db.sock",
-    "charset": "utf8mb4",
-    "rejectEmpty": true
+```js
+export default {
+  name: 'express-mariadb',
+  port: 3500,
+  db: {
+    host: 'localhost',
+    user: 'user',
+    password: 'pw',
+    database: 'db',
+    socketPath: '/path/to/db.sock',
+    charset: 'utf8mb4',
+    rejectEmpty: true,
   },
-  "debug": false
-}
+  jwt: {
+    secret: 'your-super-secrets-key',
+    expired: 18000000,
+  },
+  debug: false,
+};
 ```
 
 ### Start dev server

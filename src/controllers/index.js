@@ -1,4 +1,4 @@
-import config from '#config' assert { type: 'json' };
+import config from '#config';
 
 class c$index {
   home = (req, res, next) => {

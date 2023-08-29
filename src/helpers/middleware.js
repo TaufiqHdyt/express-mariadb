@@ -1,4 +1,4 @@
-import config from '#config' assert { type: 'json' };
+import config from '#config';
 
 import m$auth from '#module/auth.module.js';
 
