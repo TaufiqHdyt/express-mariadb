@@ -3,8 +3,8 @@
 ## Tech stack
 
 - Node JS
-  - LTS with n (`n lts`)
-  - pnpm with corepack (`corepack enable && corepack prepare pnpm@latest --activate`)
+  - LTS version with n (`n lts`)
+  - pnpm with corepack (`corepack enable && corepack install -g pnpm@latest`)
 - Express
   - latest
 - mySQL
@@ -33,7 +33,7 @@ pnpm up -iL # interactively update dependencies to latest
 
 ### Add config file
 
-`config/index.js` can be created from `.src/config/index.example.js`
+`.src/config/index.js` can be created from `.src/config/index.example.js`
 
 ### Add mariadb
 
@@ -112,7 +112,6 @@ pnpm start
 
 ## Notes
 
-- using experimental assert json
 - using node `--watch` mode for `start:dev` script
 
 ### Additional resource
